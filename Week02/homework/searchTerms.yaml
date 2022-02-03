@@ -4,4 +4,4 @@ apache:
   cgi: "[GET|POST].*/cgi-bin/test-cgi.*,[GET|POST].*/cgi-bin/htsearch.*"
 qq:
   proxy_opened: "[Qq]{2}.*.[eE][xE][eE].* open through proxy.*"
-  proxy_closed: "[Qq]{2}.*.[eE][xE][eE].*close. [0-9]+ bytes sent.*"
+  proxy_closed: "[Qq]{2}.*.[eE][xE][eE].*close. [0-9]+ bytes sent.*,[Qq]{2}.*.[eE][xE][eE].*close. [0-9]+ bytes \\(.*"

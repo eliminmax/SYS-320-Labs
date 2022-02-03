@@ -14,6 +14,10 @@ except EnvironmentError as e:
     print(e.strerror)
 
 
+# pattern to remove info inside of parenthases
+deparen = re.compile(' \\(.*\\)')
+
+
 def parse(log_file_path, service, term):
     """Return a list of matches for regex patterns in a log file
     """
@@ -23,7 +27,8 @@ def parse(log_file_path, service, term):
     re_patterns = terms.split(',')
 
     with open(log_file_path, 'r') as log_file:
-        log_entries = log_file.readlines()
+        log_entries = [re.sub(deparen, '', line)
+                       for line in log_file.readlines()]
 
     # pre-compiling the patterns is more efficient than
     # compiling them every time they're needed
