@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Default to mdr (https://github.com/MichaelMure/mdr)
+MARKDOWN_RENDERER=${JUPYTERM_MARKDOWN_RENDERER:-mdr}
+
+
+# iterate over arguments
+while (( $# )); do
+    # render to STDOUT, pipe to a Markdown Renderer program
+    jupyter-nbconvert --to markdown --stdout --execute $1 | $MARKDOWN_RENDERER
+    shift # shift arguments, so that $1 now points to the next argument
+done
