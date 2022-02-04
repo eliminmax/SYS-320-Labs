@@ -7,8 +7,7 @@ import csv
 
 
 # FIXED: renamed function `ur1HausOpen` to `urlHausOpen`
-# FIXED: renamed parameter `searchTerm` to `searchTerms`
-def urlHausOpen(filename, searchTerms):
+def urlHausOpen(filename, searchTerm):
     # FIXED: indented this and following lines
     # FIXED: replaced `while` with `with`
     # FIXED: removed quotes around `'filename'`
@@ -26,10 +25,9 @@ def urlHausOpen(filename, searchTerms):
         # this line does not do anything with it
         # FIXED: saved return value to variable nextCSVEntry
         nextCSVEntry = next(contents)
-        # INFO: iterate over searchTerms
-        # FIXME: searchTerms is a string, so this iterates over characters.
-        # I assume that that's not intentional
-        for keyword in searchTerms:
+        # INFO: iterate over searchTerm
+        # FIXED: replaced `searchTerms` with `searchTerm`
+        for keyword in searchTerm:
             for eachLine in contents:
                 # FIXME: do something with x
                 # FIXME: eachline[2] is out-of-bounds
