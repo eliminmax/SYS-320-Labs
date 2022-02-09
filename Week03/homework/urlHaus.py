@@ -29,9 +29,9 @@ def urlHausOpen(filename, searchTerms):
     for eachLine in contents:
         # INFO: iterate over searchTerms
         for keyword in searchTerms:
-            # FIXED: replaced `r+keyword+` with `pattern`
+            # FIXED: replaced `r+keyword+` with `r'.*'+keyword+r'.*'`
             x = re.findall(r'.*'+keyword+r'.*', eachLine[2])
-
+            # Print info about the match
             for _ in x:
                 # Don't edit this line. It is here to show how it is possible
                 # to remove the "tt" so programs don't convert the malicious
