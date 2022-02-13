@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# File to traverse a given directoru and retrieve all the files
+# File to traverse a given directory and retrieve all the files
 
 import os
 import sys
