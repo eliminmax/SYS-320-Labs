@@ -1,0 +1,20 @@
+---
+shell_access:
+  win_cmd: 'cmd.exe'
+  win_pwsh: 'powershell'
+  nix_shell: '/bin/([a-z0-9]{0,4})?sh'
+  web_shell: 'c99.php'
+
+sql_inject: 
+  php_adm: '/phpmyadmin'
+  mysql: 'mysql'
+
+dir_traversal:
+  passwd: '/etc/passwd'
+  up_dir: '\.\.'
+
+cms:
+  joomla: 'joomla'
+  wordpress: 'wordpress'
+  xmlprc: 'xmlprc'
+
