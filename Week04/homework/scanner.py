@@ -42,15 +42,14 @@ def search_logs(re_patterns, log_files, rootdir):
     for file in log_files:
         with open(rootdir.joinpath(file)) as f:
             lines = f.readlines()
-            # Iterate over line numbers instead of lines so line number can
-            #   | be printed in output
-            for line_num in range(len(lines)):
+            # Iterate over lines
+            for line_num, line_text in enumerate(lines):
                 # re_patterns is a dict of format "category:searchterm": regex
-                for pattern_name in re_patterns:
+                for pattern_name, pattern in re_patterns.items():
                     # if the line contains a match, print an alert
-                    if re_patterns[pattern_name].search(lines[line_num]):
+                    if pattern.search(line_text):
                         print(f'{file}:{line_num} {pattern_name}',
-                              lines[line_num], end='')
+                              line_text, end='')
                         # end='' because the line already ends with a newline
 
 
