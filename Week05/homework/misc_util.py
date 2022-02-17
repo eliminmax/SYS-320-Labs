@@ -1,4 +1,9 @@
+"""This module contains, as the name implies, assorted utilities that
+I have copied either from the internet or older submissions of mine from
+previous weeks.
+"""
 import collections.abc
+from pathlib import Path
 
 
 def flatten_dict(d, parent_key='', sep=':'):
@@ -24,3 +29,21 @@ def flatten_dict(d, parent_key='', sep=':'):
         else:
             items.append((new_key, v))
     return dict(items)
+
+
+def get_file_list(rootdir, file_glob='*'):
+    """Return a list of files in rootdir or its subdirectories
+    This function was originally part of Week04/homework/scanner.py.
+    I copied it out, because it's generic enough to be useful elsewhere.
+    I rewrote the list constructor as a for loop for better readability.
+    """
+    # ensure that rootdir is a pathlib.Path object, and not relative
+    rootdir = Path(rootdir).resolve()
+    # recursively search rootdir for files matching file_glob
+    # note that unlike POSIX systems, '*' matches hidden files
+    file_list = []
+    for subpath in rootdir.rglob(file_glob):
+        if subpath.is_file():
+            file_list.append(subpath.relative_to(rootdir))
+
+    return file_list
