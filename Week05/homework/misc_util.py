@@ -3,6 +3,8 @@ I have copied either from the internet or older submissions of mine from
 previous weeks.
 """
 import collections.abc
+import re
+import yaml
 from pathlib import Path
 
 
@@ -47,3 +49,23 @@ def get_file_list(rootdir, file_glob='*'):
             file_list.append(subpath.relative_to(rootdir))
 
     return file_list
+
+
+def load_search_patterns(filepath):
+    """Load search patterns from YAML file, using the following process:
+    1: load the contents of the YAML file at `filepath` into a dict
+    2: flatten the dict, so that 'a':{'b':{'c':'d'}} becomes 'a:b:c':'d'
+    3: compile the regex patterns, to improve performance when repeatedly used
+
+    This function was originally part of Week04/homework/scanner.py.
+    I copied it out, because it's generic enough to be useful elsewhere.
+    """
+    # load the data
+    with open(filepath) as f:
+        raw_yaml_data = yaml.safe_load(f)
+
+    # flatten the data
+    flattened_data = flatten_dict(raw_yaml_data)
+
+    # return dict of case-insensitive compiled patterns:
+    return {k: re.compile(v, flags=re.I) for k, v in flattened_data.items()}
