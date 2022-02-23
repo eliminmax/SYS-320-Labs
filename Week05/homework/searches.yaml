@@ -1,0 +1,23 @@
+---
+cred_cache:
+  dll_inject:
+    - "hklm.system.currentcontrolset.control.lsa.*/v (security|notification|authentication) (packages.*\\.dll)"
+    - "arguments"
+
+scripts:
+  mshta_executable: ["mshta(\\.exe)?", "path"]
+  hta_files: ["\\.hta", "arguments"]
+  vbscript: ["javascript", "arguments"]
+  about: ["about", "arguments"]
+  javascript: ["javascript:", "arguments"]
+  reghead: ["reghead", "arguments"]
+  wscript: ["wscript\\.shell", "path"]
+  cscript: ["cscript", "path"]
+  jscript: ["jscript", "path"]
+  sscript: ["sscript", "path"]
+  regsvr32: ["regsvr32", "arguments"]
+
+powershell:
+  powershell:
+    - "powershell(\\.exe)?|psm?1|pslockdownpolicy|executioncontex\\.sessionstate\\.languagemode|net\\.webclient|iex|invoke-|token_(impersonate|duplicate|(adjust_)?privileges)|getdelegateforfunctionpointer|system\\.(reflection\\.(assemblyname|emit\\.assemblybuilderaccess|callingconventions)|multicastdelegate)|get-gpppassword|system\\.security\\.cyptography\\.aescryptoserviceprovider|0x4e,0x99,0x06,0xe8,0xfc,0xb6,0x6c,0xc9,0xfa,0xf4|(scheduledtasks\\.task|groups\\.user)\\.properties\\.cpassword|system\\.management\\.automation\\.windowserrorreporting|out-minidump|minidumpwritedump|executionpolicypsremoting"
+    - "arguments"
