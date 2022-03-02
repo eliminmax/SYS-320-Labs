@@ -61,8 +61,7 @@ def main():
     # execute `sudo fs.py -d /usr/bin` on the server, saving stdout to outfile
     stdin, stdout, stderr = ssh_client.exec_command(
         'sudo ./fs.py --directory /usr/bin')
-    with open(outfile, 'w') as f:
-        outfile.write(stdout)
+    outfile.write_bytes(stdout.read())
 
 
 if __name__ == '__main__':
