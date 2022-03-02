@@ -1,0 +1,78 @@
+---
+# Adapted from https://github.com/mubix/post-exploitation/wiki/Linux-Post-Exploitation-Command-List#collecting-information
+blind_files:
+  - 'cat /etc/resolv.conf'
+  - 'cat /etc/motd'
+  - 'cat /etc/issue'
+  - 'cat /etc/passwd'
+  - 'cat /etc/shadow'
+
+system:
+  - 'uname -a'
+  - 'ps aux'
+  - 'top -n 1 -d'
+  - 'id'
+  - 'arch'
+
+networking:
+  - 'hostname -f'
+  - 'ip address show'
+  - 'ip ro show'
+  - 'ifconfig -a'
+  - 'route -n'
+
+# Skipped duplicates /etc/shadow and /etc/passwd, and non-Linux files
+
+user_accounts:
+  - 'cat /etc/group'
+  - 'getent passwd'
+  - 'pdbedit -L -w'
+  - 'pdbedit -L -v'
+  - 'cat /etc/aliases'
+
+user_info:
+  - 'ls -alh /home/*/'
+  - 'ls -alh /home/*/.ssh/'
+  - 'cat /home/*/.ssh/authorized_keys'
+  - 'cat /home/*/.ssh/known_hosts'
+  - 'cand /home/*/.hist'
+
+credentials:
+  - 'cat /home/*/.ssh/id*'
+  - 'cat /tmp/krb5cc_*'
+  - 'cat /tmp/krb5.keytab'
+  - 'cat /home/*/.gnupg/secring.gpgs'
+
+# Skipped duplicate /etc/group
+configs:
+  - 'ls -aRl /etc/ * awk ''$1 ~ /w.$/'' * grep -v lrwx 2>/dev/nullte'
+  - 'cat /etc/issue{,.net}'
+  - 'cat /etc/master.passwd'
+  - 'cat /etc/hosts'
+  - 'cat /etc/crontab'
+
+# Skipped duplicates uname -a, /etc/issue
+# Skipped non-debian/non-ubuntu files and commands
+determine_distro:
+  - 'lsb_release -d'
+  - 'cat /etc/os-release'
+  - 'cat /etc/debian_{release,version}'
+
+packages:
+  - 'dpkg -l'
+  - 'dpkg -l | grep -i "linux-image"'
+  - 'dpkg --get-selections'
+
+# Added /etc/sources.list.d/*
+# Added ls -Al (the ls -A/--almost-all flag is like -a/--all, but it skips the implicit . and ..)
+package_sources:
+  - 'ls -Al /etc/apt/sources.list /etc/apt/sources.list.d/'
+  - 'cat /etc/apt/sources.list /etc/apt/sources.list.d/{,.}*'
+
+# Replaced deprecated `command` with $(command)
+important_files:
+  - 'ls -dlR */'
+  - 'ls -alR | grep ^d'
+  - 'find /var -type d'
+  - 'ls -dl $(find /var -type d)'
+  - 'ls -dl $(find /var -type d) | grep root'
